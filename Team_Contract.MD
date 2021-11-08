@@ -1,4 +1,4 @@
-#CS225 Data Structures
+# CS225 Data Structures
 ## Team Contract (murugan4-aryanm6-hpg2-ankitv2)
 ### Communication
 
