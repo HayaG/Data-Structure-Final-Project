@@ -1,4 +1,4 @@
-CS225 Data Structures
+#CS225 Data Structures
 ## Team Contract (murugan4-aryanm6-hpg2-ankitv2)
 ### Communication
 
@@ -12,5 +12,5 @@ Should a team member continuously fail to complete deliverables and not put in t
 3. **Conflict Resolution-** All conflicts within the team will be decided by a real-life boxing match, till one taps or or is knocked out. The winner decides who is correct.
 All rules of the Association of Boxing Commissions’ Unified Rules of Boxing will be followed. 
 ### Signatures
-
+ankitv2
 
