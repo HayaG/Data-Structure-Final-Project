@@ -14,3 +14,4 @@ All rules of the Association of Boxing Commissions’ Unified Rules of Boxing wi
 ### Signatures
 ankitv2
 murugan4
+aryanm6
