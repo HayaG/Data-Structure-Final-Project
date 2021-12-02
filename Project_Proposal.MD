@@ -13,7 +13,7 @@
 		- Graph Coloring
 			- We will implement a graph coloring algorithm such that we can identify the different colors/ids for each node in the graph. This will show us how widespread the graph truly is in relation to the connections of each node. The more colors we have on the graph, the more we know how connected together the graph would be.
 	- 1 Graph Traversal
-		-  BFS: Start at one node and BFS out as far as possible, and note the total number of connections. Repeat with the same node and BFS out until you hit an opposing political view. Repeat with a larger set of nodes and find the average of the number of connections from every node to its opposing point of view compared to the number of connections possible. Present this data.
+		-  BFS: Start at one node and BFS out as far as possible, and note the gender value of each node. Use this data to create a percentage ratio of gender a vs gender b within the data.
     
 
 -   Timeline
