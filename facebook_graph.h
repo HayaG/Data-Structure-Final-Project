@@ -12,9 +12,9 @@ class facebook_graph{
     
     public:
         facebook_graph(string Gender_File, string EdgeList_File);
-        // Percentage of Males to Females in the Data
-        //This just BFS From a certain random node in the Graph and then outputs the percentage of Males to Females in the Data
-        void calculatePercentageOfMalesToFemales();
+        // ratio of Gender A to Gendre B in the Data
+        //This just BFS From a certain random node in the Graph and then outputs the ratio of Gender A to Gender B in the Data
+        void calculateGenderRatio();
         void bfs(int &male_count, int &female_count, vector<int> &visited_order, int startingNode);
 
         //Shortest Path algorithm
@@ -32,7 +32,7 @@ class facebook_graph{
 
         int male_count = 0;
         int female_count = 0;
-        double percentage_MenToWomen = 0;
+        double ratio_AtoB = 0;
         vector<int> visited_order;
 
         //Useful Links:

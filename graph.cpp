@@ -128,12 +128,12 @@ facebook_graph::facebook_graph(string Gender_File, string EdgeList_File){
             
 }
 
-void facebook_graph::calculatePercentageOfMalesToFemales(){
+void facebook_graph::calculateGenderRatio(){
 
     bfs(male_count, female_count, visited_order, 1);
     // cout << male_count << endl;
     // cout<< female_count<<endl;
-    percentage_MenToWomen = (double)male_count / female_count;
+    ratio_AtoB = (double)male_count / female_count;
 }
 
 void facebook_graph::bfs(int &male_count, int &female_count, vector<int> &visited_order, int startingNode)

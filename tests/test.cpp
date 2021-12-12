@@ -5,24 +5,49 @@
 #include <vector>
 using namespace std;
 
-/* int test() {
-    cout << "Testing the constructor" << endl;
-    facebook_graph test_graph("tests/Test_Gender.csv","tests/Test_Edge_List.csv");
+TEST_CASE("BFS visits all vertices only once", "[weight=1]") {
+    facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
 
-    int genderA = 0;
-    int genderB = 0;
+    int genderAcount, genderBcount = 0;
     vector<int> visited_path;
 
-    test_graph.bfs(genderA, genderB, visited_path, 1);
+    //Sorted vertices
+    vector<int> sorted_vertices{ 1, 2, 3, 4, 5, 6, 7 };
 
+    test_graph.bfs(genderAcount, genderBcount, visited_path, 1);
+
+    sort(visited_path.begin(), visited_path.end());
+
+    //Checks if each node was only once
     for(unsigned i=0; i<visited_path.size();i++){
-        cout << visited_path[i] << endl;
+        REQUIRE( sorted_vertices[i] == visited_path[i] );
     }
-
-    return 0;
-} */
-
-TEST_CASE("HSLAPixel's default constructor creates a white pixel", "[weight=1]") {
-  REQUIRE( 1 == 1 );
+    
 }
 
+TEST_CASE("BFS visits all vertices in the correct order", "[weight=1]") {
+
+    facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
+
+    int genderAcount, genderBcount = 0;
+    vector<int> visited_path;
+
+    //Correct order of BFS determined by order of edges in Test_Edge_List7.csv
+    vector<int> correct_path{ 1, 2, 3, 7, 4, 5, 6 };
+
+    test_graph.bfs(genderAcount, genderBcount, visited_path, 1);
+
+    //Checks if each node was visited in the proper order
+    for(unsigned i=0; i<visited_path.size();i++){
+        REQUIRE( correct_path[i] == visited_path[i] );
+    }
+    
+}
+
+TEST_CASE("BFS to find percentage of gender A within the data is correct", "[weight=1]") {
+    facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
+
+    test_graph.calculateGenderRatio();
+
+    REQUIRE(test_graph.ratio_AtoB == (5.0/2.0));
+}
