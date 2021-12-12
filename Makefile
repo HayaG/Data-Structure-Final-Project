@@ -15,17 +15,17 @@ output_msg: ; $(CLANG_VERSION_MSG)
 $(EXENAME): output_msg $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
-$(OBJS_DIR)/%.o: %.cpp | $(OBJS_DIR)
+$(OBJS_DIR)/%.o: %.cpp | $(OBJS_DIR) 
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-net.o : main.cpp graph.cpp facebook_graph.h
-	$(CXX) $(CXXFLAGS) main.cpp graph.cpp
+graph.o: graph.cpp facebook_graph.h
+	$(CXX) $(CXXFLAGS) graph.cpp
 
 test: output_msg test.o graph.o
 	$(LD) test.o graph.o $(LDFLAGS) -o test
 
-test.o: test.cpp
-	$(CXX) $(CXXFLAGS) test.cpp
+test.o: tests/test.cpp facebook_graph.h catch/catch.hpp 
+	$(CXX) $(CXXFLAGS) tests/test.cpp
 
 clean :
 	-rm -f *.o .txt $(EXENAME) test
