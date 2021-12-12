@@ -227,3 +227,36 @@ int facebook_graph::minDistance(vector<int> dist, vector<bool> sptSet){
 
     return min_index;
 }
+
+void facebook_graph::graphColoring(){
+    int result[node_list.size()];
+    result[0]=0;
+    for(int u=1; u<node_list.size(); u++)result[u]=-1;
+
+    bool available[node_list.size()];
+    for(int cr=0; cr<node_list.size(); cr++)available[cr]=0;
+    for(int u=1; u<node_list.size(); u++){
+      vector<pair<int, int>> node_neighbors = graph[u];
+      for(pair<int, int> i: node_neighbors){
+        if(result[i.first]!=-1){
+          available[result[i.first]]=true;
+        }
+      }
+
+      int cr;
+      for(cr=0; cr<node_list.size(); cr++){
+        if(available[cr]==0)break;
+      }
+
+      result[u]=cr;
+
+      for(pair<int, int> i: node_neighbors){
+        if(result[i.first] != -1){
+          available[result[i.first]]=false;
+        }
+      }
+    }
+    for(int u=0; u<node_list.size(); u++){
+      std::cout<<"Vertex "<<u<<" ---> Color "<<result[u]<<std::endl;
+    }
+}
