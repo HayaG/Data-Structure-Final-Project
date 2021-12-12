@@ -2,6 +2,10 @@
 #include <fstream>
 #include <stdio.h>
 #include <vector>
+#include <set>
+#include <algorithm>
+#include <limits.h>
+
 
 facebook_graph::facebook_graph(string Gender_File, string EdgeList_File){
     ifstream genderListFile;
@@ -121,13 +125,14 @@ facebook_graph::facebook_graph(string Gender_File, string EdgeList_File){
             graph[vertexTwo] = temp;
         }
     }
+            
 }
 
 void facebook_graph::calculatePercentageOfMalesToFemales(){
 
     bfs(male_count, female_count, visited_order, 1);
-    cout << male_count << endl;
-    cout<< female_count<<endl;
+    // cout << male_count << endl;
+    // cout<< female_count<<endl;
     percentage_MenToWomen = (double)male_count / female_count;
 }
 
@@ -140,8 +145,8 @@ void facebook_graph::bfs(int &male_count, int &female_count, vector<int> &visite
 
     while(!queue.empty()){
         int currentNode = queue.front();
-        visited_order.push_back(currentNode);
         queue.pop();
+        visited_order.push_back(currentNode);
         //Push the same node multiple times and visit it
         
 
@@ -156,12 +161,69 @@ void facebook_graph::bfs(int &male_count, int &female_count, vector<int> &visite
 
         for(int i=0;i<nodeNeighbors.size();i++){
             int neighborNode = nodeNeighbors[i].first;
-            // cout<<neighborNode<<endl;
             if (visited.find(neighborNode) == visited.end()){
+
                 //Not Found
+                // cout<< visited[neighborNode] << endl;
                 queue.push(neighborNode);
                 visited[neighborNode] = 1;
             }
         } 
     }
+}
+
+int facebook_graph::calculateTheShortestPath(int Node1, int Node2){
+    // Maps Node to Their Current Cost
+    // Array is 0 index, so Node1 is in index 0
+    vector<int> node_cost(graph.size(),INT_MAX);
+    node_cost[Node1-1]=0;
+
+    // SP set, this keeps track of the verticies included in the shortest Path
+    vector<bool> sp_set(graph.size(),false);
+
+    //Fill node_cost with all Nodes and their Initial Values, eveyrthing is INT_MAX except Node1
+
+    //while sp_set != graph.size()
+    //pick the next smallest vertex that isn't in sp_set and add it to sp_set 
+    //Iterate all adjacent nodes and update their costs with the weight that already exits + weight of edge if its less that the pre-existing weight 
+
+    int sp_set_size = 0;
+    while(sp_set_size != graph.size()){
+
+        int index_of_next_element = minDistance(node_cost,sp_set);
+        // This is done, because the node_cost and sp_set array are 0 indexed.
+        int node_id = index_of_next_element + 1;
+        //Starting Point of Node
+
+        //Include next_element in sp_set
+        sp_set[index_of_next_element]= true;
+        sp_set_size++;
+
+        vector<pair<int,int> > adjacent_vertex_list = graph[node_id];
+
+        for(auto i: adjacent_vertex_list){
+            
+            // Node node_id connects to i.first
+            int neighbor_node = i.first;
+            int neightbor_node_cost = node_cost[neighbor_node - 1];
+            int weight_of_connection  = i.second;
+
+            if (node_cost[node_id - 1] + weight_of_connection < neightbor_node_cost){
+                node_cost[neighbor_node - 1] = node_cost[node_id - 1] + weight_of_connection;
+            }
+        }
+    }
+
+    return node_cost[Node2 - 1];
+}
+
+//This function Returns the Index of the next minimum element to be visited in shortest Path Alg that ins't in SP set
+int facebook_graph::minDistance(vector<int> dist, vector<bool> sptSet){
+    int min = INT_MAX, min_index;
+
+    for (int v = 0; v < graph.size(); v++)
+        if (sptSet[v] == false && dist[v] <= min)
+            min = dist[v], min_index = v;
+
+    return min_index;
 }
