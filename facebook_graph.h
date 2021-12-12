@@ -18,14 +18,16 @@ class facebook_graph{
         void bfs(int &male_count, int &female_count, vector<int> &visited_order, int startingNode);
 
         //Shortest Path algorithm
-        void calculateTheShortestPath(int Node1, int Node2);
+        int calculateTheShortestPath(int Node1, int Node2);
 
         //Maps Node to their Gender
         unordered_map<int, int> node_list;
         
         //Maps Node to a pair, which is made of another node # and the weight of the edge connection
         unordered_map<int, vector<pair<int,int> > > graph;
-        
+
+        int minDistance(vector<int> dist, vector<bool> sptSet);
+
         int male_count = 0;
         int female_count = 0;
         double percentage_MenToWomen = 0;
