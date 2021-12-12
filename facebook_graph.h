@@ -28,6 +28,8 @@ class facebook_graph{
 
         int minDistance(vector<int> dist, vector<bool> sptSet);
 
+        void graphColoring();
+
         int male_count = 0;
         int female_count = 0;
         double percentage_MenToWomen = 0;
