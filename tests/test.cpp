@@ -189,9 +189,9 @@ TEST_CASE("Shortest path determines the correct path distance between two nodes,
     //These are the correct path distances between two points, with paths being weighted. 
     //An edge connecting the same gender has a weight of 1, and an edge connecting opposing genders has a weight of 2.
 
-    REQUIRE(test_graph.calculateTheShortestPath(2,9) == 3);
+    REQUIRE(test_graph.calculateTheShortestPath(2,9) == 4);
     REQUIRE(test_graph.calculateTheShortestPath(1, 3) == 2);
-    REQUIRE(test_graph.calculateTheShortestPath(1,10) == 2);
+    REQUIRE(test_graph.calculateTheShortestPath(1,10) == 3);
     REQUIRE(test_graph.calculateTheShortestPath(2,4) == 2);
     REQUIRE(test_graph.calculateTheShortestPath(5,7) == 3);
 }

@@ -78,51 +78,55 @@ facebook_graph::facebook_graph(string Gender_File, string EdgeList_File){
 
             if (counter == 1)
             {
-                edgeValues[counter] = line.substr(0, pos);
+                edgeValues[counter] = line.substr(0);
             }
         }
+
 
         int vertexOne = stoi(edgeValues[0]);
         int vertexTwo = stoi(edgeValues[1]);
 
-        //if the nodes are the same same gender, then they are weight of 2, else weight of 1
-        int edgeWeight = node_list[vertexOne] == node_list[vertexTwo] ? 1 : 2;
+        if (node_list.find(vertexOne)!= node_list.end() && node_list.find(vertexTwo)!=node_list.end()){
+            //if the nodes are the same same gender, then they are weight of 2, else weight of 1
+            int edgeWeight = node_list[vertexOne] == node_list[vertexTwo] ? 1 : 2;
 
-        // cout<< vertexOne << " "<< vertexTwo<< " " << edgeWeight <<endl;
+            // cout<< vertexOne << " "<< vertexTwo<< " " << edgeWeight <<endl;
 
+            //Node # and Weight
+            pair<int, int> vertexOnePair;
+            vertexOnePair.first = vertexOne;
+            vertexOnePair.second = edgeWeight;
 
-        //Node # and Weight
-        pair<int,int> vertexOnePair;
-        vertexOnePair.first = vertexOne;
-        vertexOnePair.second = edgeWeight;
+            //Node # and Weight
+            pair<int, int> vertexTwoPair;
+            vertexTwoPair.first = vertexTwo;
+            vertexTwoPair.second = edgeWeight;
 
-        //Node # and Weight
-        pair<int, int> vertexTwoPair;
-        vertexTwoPair.first = vertexTwo;
-        vertexTwoPair.second = edgeWeight;
+            if (graph.find(vertexOne) != graph.end())
+            {
+                //Found
+                graph[vertexOne].push_back(vertexTwoPair);
+            }
+            else
+            {
+                //Not Found
+                vector<pair<int, int>> temp;
+                temp.push_back(vertexTwoPair);
+                graph[vertexOne] = temp;
+            }
 
-        if (graph.find(vertexOne)!= graph.end()){
-            //Found
-            graph[vertexOne].push_back(vertexTwoPair);
-
-        }else{
-            //Not Found
-            vector<pair<int,int> > temp;
-            temp.push_back(vertexTwoPair);
-            graph[vertexOne] = temp;
-        }
-
-        if (graph.find(vertexTwo) != graph.end())
-        {
-            //Found
-            graph[vertexTwo].push_back(vertexOnePair);
-        }
-        else
-        {
-            //Not Found
-            vector<pair<int, int> > temp;
-            temp.push_back(vertexOnePair);
-            graph[vertexTwo] = temp;
+            if (graph.find(vertexTwo) != graph.end())
+            {
+                //Found
+                graph[vertexTwo].push_back(vertexOnePair);
+            }
+            else
+            {
+                //Not Found
+                vector<pair<int, int>> temp;
+                temp.push_back(vertexOnePair);
+                graph[vertexTwo] = temp;
+            }
         }
     }
             

@@ -3,7 +3,8 @@
 using namespace std;
 
 int main(){
-    facebook_graph object("tests/Test_Gender10.csv","tests/Test_Edge_List10.csv");
+    // facebook_graph object("tests/Test_Gender10.csv","tests/Test_Edge_List10.csv");
+    facebook_graph object("Gender.csv", "EdgeList.csv");
 
     // for (auto i : object.graph){
     //     cout<<i.first<<endl;
@@ -22,14 +23,16 @@ int main(){
     cout<< object.male_count <<endl;
     cout<< object.female_count <<endl;
 
+    cout<<object.node_list.size()<<endl;
+
     //cout<<object.calculateTheShortestPath(1,5);
-    unordered_map<int, vector<int>> output = object.graphColoring();
-    for(auto i:output){
-      std::cout<<"Color "<<i.first<<" -->";
-      for(auto j: i.second){
-        std::cout<<j<<" ";
-      }
-      std::cout<<std::endl;
-    }
+    // unordered_map<int, vector<int>> output = object.graphColoring();
+    // for(auto i:output){
+    //   std::cout<<"Color "<<i.first<<" -->";
+    //   for(auto j: i.second){
+    //     std::cout<<j<<" ";
+    //   }
+    //   std::cout<<std::endl;
+    // }
     return 0;
 }
