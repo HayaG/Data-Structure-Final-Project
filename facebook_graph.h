@@ -28,7 +28,7 @@ class facebook_graph{
 
         int minDistance(vector<int> dist, vector<bool> sptSet);
 
-        void graphColoring();
+        unordered_map<int, vector<int>> graphColoring();
 
         int male_count = 0;
         int female_count = 0;
