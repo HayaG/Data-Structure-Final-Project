@@ -231,18 +231,30 @@ int facebook_graph::minDistance(vector<int> dist, vector<bool> sptSet){
 unordered_map<int, vector<int>> facebook_graph::graphColoring(){
     unordered_map<int, vector<int>> output;
     int size = node_list.size();
+    //std::cout<<size<<std::endl;
     int result[size];
+
+ /*   for(int x=1; x<=size; x++){
+      auto neighbors = graph[x];
+      for(auto y:neighbors){
+        std::cout<<y.first<<" ";
+      }
+      std::cout<<std::endl;
+    }*/
+
     result[0]=0;
     output[0].push_back(1);
-    for(int u=2; u<=size; u++)result[u-1]=-1;
+    for(int u=1; u<size; u++)result[u]=-1;
+
     bool available[size];
     for(int cr=0; cr<size; cr++)available[cr]=0;
-    for(int u=2; u<=size; u++){
-      vector<pair<int, int>> node_neighbors = graph[u-1];
+
+    for(int u=1; u<size; u++){
+      vector<pair<int, int>> node_neighbors = graph[u+1];
       for(pair<int, int> i: node_neighbors){
-        if(result[i.first]!=-1){
+        if(result[i.first-1]!=-1){
 //std::cout<<i.first<<" "<<result[i.first]<<std::endl;
-          available[result[i.first]]=true;
+          available[result[i.first-1]]=true;
 //std::cout<<__LINE__<<std::endl;
         }
       }
@@ -252,18 +264,18 @@ unordered_map<int, vector<int>> facebook_graph::graphColoring(){
         if(available[cr]==0)break;
       }
 
-      result[u-1]=cr;
-//std::cout<<cr<<" "<<u<<std::endl;
-      output[cr].push_back(u);
+      result[u]=cr;
+//std::cout<<__LINE__<<std::endl;
+      output[cr].push_back(u+1);
 //std::cout<<__LINE__<<std::endl;
       for(pair<int, int> i: node_neighbors){
-        if(result[i.first] != -1){
-          available[result[i.first]]=false;
+        if(result[i.first-1] != -1){
+          available[result[i.first-1]]=false;
         }
       }
     }
-    /*for(int u=0; u<node_list.size(); u++){
-      std::cout<<"Vertex "<<u<<" ---> Color "<<result[u]<<std::endl;
-    }*/
+    for(int u=0; u<size; u++){
+//      std::cout<<"Vertex "<<u<<" ---> Color "<<result[u]<<std::endl;
+    }
     return output;
 }
