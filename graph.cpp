@@ -233,12 +233,12 @@ unordered_map<int, vector<int>> facebook_graph::graphColoring(){
     int size = node_list.size();
     int result[size];
     result[0]=0;
-    output[0].push_back(0);
-    for(int u=1; u<size; u++)result[u]=-1;
+    output[0].push_back(1);
+    for(int u=2; u<=size; u++)result[u-1]=-1;
     bool available[size];
     for(int cr=0; cr<size; cr++)available[cr]=0;
-    for(int u=1; u<size; u++){
-      vector<pair<int, int>> node_neighbors = graph[u];
+    for(int u=2; u<=size; u++){
+      vector<pair<int, int>> node_neighbors = graph[u-1];
       for(pair<int, int> i: node_neighbors){
         if(result[i.first]!=-1){
 //std::cout<<i.first<<" "<<result[i.first]<<std::endl;
@@ -252,7 +252,7 @@ unordered_map<int, vector<int>> facebook_graph::graphColoring(){
         if(available[cr]==0)break;
       }
 
-      result[u]=cr;
+      result[u-1]=cr;
 //std::cout<<cr<<" "<<u<<std::endl;
       output[cr].push_back(u);
 //std::cout<<__LINE__<<std::endl;
