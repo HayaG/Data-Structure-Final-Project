@@ -5,7 +5,7 @@
 #include <set>
 #include <algorithm>
 #include <limits.h>
-
+#include <unordered_map>
 
 facebook_graph::facebook_graph(string Gender_File, string EdgeList_File){
     ifstream genderListFile;
@@ -228,35 +228,42 @@ int facebook_graph::minDistance(vector<int> dist, vector<bool> sptSet){
     return min_index;
 }
 
-void facebook_graph::graphColoring(){
-    int result[node_list.size()];
+unordered_map<int, vector<int>> facebook_graph::graphColoring(){
+    unordered_map<int, vector<int>> output;
+    int size = node_list.size();
+    int result[size];
     result[0]=0;
-    for(int u=1; u<node_list.size(); u++)result[u]=-1;
-
-    bool available[node_list.size()];
-    for(int cr=0; cr<node_list.size(); cr++)available[cr]=0;
-    for(int u=1; u<node_list.size(); u++){
+    output[0].push_back(0);
+    for(int u=1; u<size; u++)result[u]=-1;
+    bool available[size];
+    for(int cr=0; cr<size; cr++)available[cr]=0;
+    for(int u=1; u<size; u++){
       vector<pair<int, int>> node_neighbors = graph[u];
       for(pair<int, int> i: node_neighbors){
         if(result[i.first]!=-1){
+//std::cout<<i.first<<" "<<result[i.first]<<std::endl;
           available[result[i.first]]=true;
+//std::cout<<__LINE__<<std::endl;
         }
       }
-
+//std::cout<<__LINE__<<std::endl;
       int cr;
-      for(cr=0; cr<node_list.size(); cr++){
+      for(cr=0; cr<size; cr++){
         if(available[cr]==0)break;
       }
 
       result[u]=cr;
-
+//std::cout<<cr<<" "<<u<<std::endl;
+      output[cr].push_back(u);
+//std::cout<<__LINE__<<std::endl;
       for(pair<int, int> i: node_neighbors){
         if(result[i.first] != -1){
           available[result[i.first]]=false;
         }
       }
     }
-    for(int u=0; u<node_list.size(); u++){
+    /*for(int u=0; u<node_list.size(); u++){
       std::cout<<"Vertex "<<u<<" ---> Color "<<result[u]<<std::endl;
-    }
+    }*/
+    return output;
 }

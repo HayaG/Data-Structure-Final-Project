@@ -1,4 +1,5 @@
 #include "facebook_graph.h"
+#include <unordered_map>
 using namespace std;
 
 int main(){
@@ -22,8 +23,13 @@ int main(){
 
 
     //cout<<object.calculateTheShortestPath(1,5);
-
-    object.graphColoring();
-
+    unordered_map<int, vector<int>> output = object.graphColoring();
+    for(auto i:output){
+      std::cout<<"Color "<<i.first<<" -->";
+      for(auto j: i.second){
+        std::cout<<j<<" ";
+      }
+      std::cout<<std::endl;
+    }
     return 0;
 }
