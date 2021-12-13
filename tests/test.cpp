@@ -7,19 +7,18 @@
 using namespace std;
 
 /** 
- * Test_Gender7.csv and Test_Edge_List7.csv are the attributes and edge list for a graph with 7 vertices that we could do human verification of graph algorithms with
- * the bfs function takes in an int variable for each gender to get the count, a vector which it stores the path of BFS in, and a starting node
+ * Test_Gender[n].csv and Test_Edge_List[n].csv are the attributes and edge list for a graph with n vertices that we could do human verification of our graph algorithms.
+ * Helper functions are used for many of the test cases to allow for other data sets to be tested fairly easily,
+ * To better understand, it is recommended to read the test case before its respective helper function, as the test cases mostly describe what the function is doing.
  */
 
-TEST_CASE("BFS visits all vertices only once", "[weight=1]") {
-    facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
+void BFSVisit(string Gender_File, string EdgeList_File, vector<int> sorted_vertices) {
+    facebook_graph test_graph(Gender_File,EdgeList_File);
 
     int genderAcount, genderBcount = 0;
     vector<int> visited_path;
 
-    //Sorted vertices in the graph
-    vector<int> sorted_vertices{ 1, 2, 3, 4, 5, 6, 7 };
-
+    //the bfs function takes in an int variable for each gender to get the count, a vector which it stores the path of BFS in, and a starting node
     test_graph.bfs(genderAcount, genderBcount, visited_path, 1);
 
     //Sorted vertices visited through BFS
@@ -32,15 +31,16 @@ TEST_CASE("BFS visits all vertices only once", "[weight=1]") {
     
 }
 
-TEST_CASE("BFS visits all vertices in the correct order", "[weight=1]") {
+TEST_CASE("BFS visits all vertices only once, 7 node graph", "[weight=1]") {
+    //Graph data and a sorted list of vertices in the graph
+    BFSVisit("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv", { 1, 2, 3, 4, 5, 6, 7 });   
+}
 
-    facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
+void BFSPath(string Gender_File, string EdgeList_File, vector<int> correct_path) {
+    facebook_graph test_graph(Gender_File,EdgeList_File);
 
     int genderAcount, genderBcount = 0;
     vector<int> visited_path;
-
-    //Correct order of BFS determined by order of edges in Test_Edge_List7.csv
-    vector<int> correct_path{ 1, 2, 3, 7, 4, 5, 6 };
 
     test_graph.bfs(genderAcount, genderBcount, visited_path, 1);
 
@@ -48,20 +48,27 @@ TEST_CASE("BFS visits all vertices in the correct order", "[weight=1]") {
     for(unsigned i=0; i<visited_path.size();i++){
         REQUIRE( correct_path[i] == visited_path[i] );
     }
-    
 }
 
-TEST_CASE("BFS to find reatio of gender A to gender B within the data is correct", "[weight=1]") {
-    facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
+TEST_CASE("BFS visits all vertices in the correct order, 7 node graph", "[weight=1]") {
+    //This function takes in the correct order of BFS which is determined by order of edges in Test_Edge_List7.csv
+    BFSPath("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv", { 1, 2, 3, 7, 4, 5, 6 });
+}
 
+void genderRatio(string Gender_File, string EdgeList_File, double AtoB) {
+    facebook_graph test_graph(Gender_File,EdgeList_File);
     test_graph.calculateGenderRatio();
 
-    //There are 5 vertices of gender A within the graph, and 2 vertices of gender B
-    REQUIRE(test_graph.ratio_AtoB == (5.0/2.0));
+    REQUIRE(test_graph.ratio_AtoB == (AtoB));
 }
 
-TEST_CASE("Graph coloring colors every vertex only once", "[weight = 1]") {
-    facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
+TEST_CASE("BFS to find ratio of gender A to gender B within the data is correct, 7 node graph", "[weight=1]") {
+    //There are 5 vertices of gender A within the graph, and 2 vertices of gender B, so the ratio is 5/2
+    genderRatio("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv", (5.0/2.0));
+}
+
+void colorOnce(string Gender_File, string EdgeList_File, vector<int> sorted_vertices) {
+    facebook_graph test_graph(Gender_File, EdgeList_File);
 
     //This map stores the color as the key, and a vector of the vertices of that color as the value
     unordered_map<int, vector<int> > output = test_graph.graphColoring();
@@ -72,9 +79,8 @@ TEST_CASE("Graph coloring colors every vertex only once", "[weight = 1]") {
     for(auto i:output) {
         vertices.insert(vertices.end(), i.second.begin(), i.second.end());
     }
-
-    vector<int> sorted_vertices{ 1, 2, 3, 4, 5, 6, 7 };
     
+    //Sorts the vector of all vertices
     sort(vertices.begin(), vertices.end());
 
     //Checks if each vertex was visited and only once
@@ -82,8 +88,11 @@ TEST_CASE("Graph coloring colors every vertex only once", "[weight = 1]") {
         REQUIRE( sorted_vertices[i] == vertices[i] );
     }
 }
+TEST_CASE("Graph coloring colors every vertex only once, 7 node graph", "[weight = 1]") {
+    colorOnce("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv", { 1, 2, 3, 4, 5, 6, 7 });
+}
 
-TEST_CASE("Graph coloring algorithm determines the correct number of colors", "[weight=1]") {
+TEST_CASE("Graph coloring algorithm determines the correct number of colors, 7 node graph", "[weight=1]") {
     facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
 
     //This map stores the color as the key, and a vector of the vertices of that color as the value
@@ -103,7 +112,7 @@ void edgeCheck(vector<int> &sameColors, int node, vector<int> edgelist) {
     }
 }
 
-TEST_CASE("Graph coloring algorithm does not assign the same color to vertices connected with an edge", "[weight=1]") {
+TEST_CASE("Graph coloring algorithm does not assign the same color to vertices connected with an edge, 7 node graph", "[weight=1]") {
     facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
 
     //This map stores the color as the key, and a vector of the vertices of that color as the value
@@ -120,7 +129,7 @@ TEST_CASE("Graph coloring algorithm does not assign the same color to vertices c
     }
 }
 
-TEST_CASE("Shortest path determines the correct path distance between two nodes", "[weight=1]") {
+TEST_CASE("Shortest path determines the correct path distance between two nodes, 7 node graph", "[weight=1]") {
     facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
     REQUIRE(test_graph.calculateTheShortestPath(1,2) == 1);
     REQUIRE(test_graph.calculateTheShortestPath(1,3) == 2);
