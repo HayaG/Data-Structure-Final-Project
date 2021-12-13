@@ -35,6 +35,10 @@ TEST_CASE("BFS visits all vertices only once, 7 node graph", "[weight=1]") {
     //Graph data and a sorted list of vertices in the graph
     BFSVisit("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv", { 1, 2, 3, 4, 5, 6, 7 });   
 }
+TEST_CASE("BFS visits all vertices only once, 10 node graph", "[weight=1]") {
+    //Graph data and a sorted list of vertices in the graph
+    BFSVisit("tests/Test_Gender10.csv","tests/Test_Edge_List10.csv", { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });   
+}
 
 void BFSPath(string Gender_File, string EdgeList_File, vector<int> correct_path) {
     facebook_graph test_graph(Gender_File,EdgeList_File);
@@ -54,6 +58,10 @@ TEST_CASE("BFS visits all vertices in the correct order, 7 node graph", "[weight
     //This function takes in the correct order of BFS which is determined by order of edges in Test_Edge_List7.csv
     BFSPath("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv", { 1, 2, 3, 7, 4, 5, 6 });
 }
+TEST_CASE("BFS visits all vertices in the correct order, 10 node graph", "[weight=1]") {
+    //This function takes in the correct order of BFS which is determined by order of edges in Test_Edge_List10.csv
+    BFSPath("tests/Test_Gender10.csv","tests/Test_Edge_List10.csv", { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
+}
 
 void genderRatio(string Gender_File, string EdgeList_File, double AtoB) {
     facebook_graph test_graph(Gender_File,EdgeList_File);
@@ -65,6 +73,10 @@ void genderRatio(string Gender_File, string EdgeList_File, double AtoB) {
 TEST_CASE("BFS to find ratio of gender A to gender B within the data is correct, 7 node graph", "[weight=1]") {
     //There are 5 vertices of gender A within the graph, and 2 vertices of gender B, so the ratio is 5/2
     genderRatio("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv", (5.0/2.0));
+}
+TEST_CASE("BFS to find ratio of gender A to gender B within the data is correct, 10 node graph", "[weight=1]") {
+    //There are 6 vertices of gender A within the graph, and 4 vertices of gender B, so the ratio is 6/4
+    genderRatio("tests/Test_Gender10.csv","tests/Test_Edge_List10.csv", (6.0/4.0));
 }
 
 void colorOnce(string Gender_File, string EdgeList_File, vector<int> sorted_vertices) {
@@ -88,17 +100,31 @@ void colorOnce(string Gender_File, string EdgeList_File, vector<int> sorted_vert
         REQUIRE( sorted_vertices[i] == vertices[i] );
     }
 }
+
 TEST_CASE("Graph coloring colors every vertex only once, 7 node graph", "[weight = 1]") {
     colorOnce("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv", { 1, 2, 3, 4, 5, 6, 7 });
 }
+TEST_CASE("Graph coloring colors every vertex only once, 10 node graph", "[weight = 1]") {
+    colorOnce("tests/Test_Gender10.csv","tests/Test_Edge_List10.csv", { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
+}
 
-TEST_CASE("Graph coloring algorithm determines the correct number of colors, 7 node graph", "[weight=1]") {
-    facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
+void numberOfColors(string Gender_File, string EdgeList_File, int colors) {
+    facebook_graph test_graph(Gender_File, EdgeList_File);
 
     //This map stores the color as the key, and a vector of the vertices of that color as the value
     unordered_map<int, vector<int> > output = test_graph.graphColoring();
 
-    REQUIRE(output.size() == 3);
+    //the size of the map is the number of keys, which correspond to colors
+    REQUIRE(output.size() == colors);
+}
+
+TEST_CASE("Graph coloring algorithm determines the correct number of colors, 7 node graph", "[weight=1]") {
+    //in the 7 node graph, there should be 3 colors
+    numberOfColors("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv", 3);
+}
+TEST_CASE("Graph coloring algorithm determines the correct number of colors, 10 node graph", "[weight=1]") {
+    //in the 10 node graph, there should be 3 colors
+    numberOfColors("tests/Test_Gender10.csv","tests/Test_Edge_List10.csv", 3);
 }
 
 //This function checks that vertices within the input vector sameColors do not share an edge, it is used in the test case below
@@ -128,12 +154,43 @@ TEST_CASE("Graph coloring algorithm does not assign the same color to vertices c
         edgeCheck(i.second, 6, { 7 });
     }
 }
+TEST_CASE("Graph coloring algorithm does not assign the same color to vertices connected with an edge, 10 node graph", "[weight=1]") {
+    facebook_graph test_graph("tests/Test_Gender10.csv","tests/Test_Edge_List10.csv");
+
+    //This map stores the color as the key, and a vector of the vertices of that color as the value
+    unordered_map<int, vector<int> > output = test_graph.graphColoring();
+    
+    //uses the function above to ensure that connected vertices are not within the same vector of colors
+    for(auto i:output){
+        edgeCheck(i.second, 1, { 2,3,4,5,6,7,8 });
+        edgeCheck(i.second, 2, { 3 });
+        edgeCheck(i.second, 3, { 4 });
+        edgeCheck(i.second, 5, { 6, 9 });
+        edgeCheck(i.second, 6, { 9 });
+        edgeCheck(i.second, 7, { 10 });
+        edgeCheck(i.second, 9, { 10 });
+    }
+}
 
 TEST_CASE("Shortest path determines the correct path distance between two nodes, 7 node graph", "[weight=1]") {
     facebook_graph test_graph("tests/Test_Gender7.csv","tests/Test_Edge_List7.csv");
+
+    //These are the correct path distances between two points, with paths being weighted. 
+    //An edge connecting the same gender has a weight of 1, and an edge connecting opposing genders has a weight of 2.
     REQUIRE(test_graph.calculateTheShortestPath(1,2) == 1);
     REQUIRE(test_graph.calculateTheShortestPath(1,3) == 2);
     REQUIRE(test_graph.calculateTheShortestPath(1,4) == 2);
     REQUIRE(test_graph.calculateTheShortestPath(1,5) == 3);
     REQUIRE(test_graph.calculateTheShortestPath(5,7) == 4);
+}
+TEST_CASE("Shortest path determines the correct path distance between two nodes, 10 node graph", "[weight=1]") {
+    facebook_graph test_graph("tests/Test_Gender10.csv","tests/Test_Edge_List10.csv");
+
+    //These are the correct path distances between two points, with paths being weighted. 
+    //An edge connecting the same gender has a weight of 1, and an edge connecting opposing genders has a weight of 2.
+    REQUIRE(test_graph.calculateTheShortestPath(2,9) == 4);
+    REQUIRE(test_graph.calculateTheShortestPath(1,3) == 2);
+    REQUIRE(test_graph.calculateTheShortestPath(1,10) == 3);
+    REQUIRE(test_graph.calculateTheShortestPath(2,4) == 2);
+    REQUIRE(test_graph.calculateTheShortestPath(5,7) == 3);
 }

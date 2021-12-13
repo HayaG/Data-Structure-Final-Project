@@ -3,13 +3,13 @@
 using namespace std;
 
 int main(){
-    facebook_graph object("Test_Gender.csv","Test_Edge_List.csv");
+    facebook_graph object("tests/Test_Gender10.csv","tests/Test_Edge_List10.csv");
 
     // for (auto i : object.graph){
     //     cout<<i.first<<endl;
     // }
 
-    // object.calculatePercentageOfMalesToFemales();
+    object.calculateGenderRatio();
 
     // cout << "vistited path" << endl;
     // for(int i=0; i<object.visited_order.size();i++){
@@ -19,8 +19,8 @@ int main(){
     // cout<<object.visited_order.size()<<endl;
     // cout<<object.graph.size()<<endl;
 
-    // cout<< object.percentage_MenToWomen <<endl;
-
+    cout<< object.male_count <<endl;
+    cout<< object.female_count <<endl;
 
     //cout<<object.calculateTheShortestPath(1,5);
     unordered_map<int, vector<int>> output = object.graphColoring();
