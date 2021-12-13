@@ -21,7 +21,9 @@ int main(){
     // cout<< object.percentage_MenToWomen <<endl;
 
 
-    cout<<object.calculateTheShortestPath(1,5);
+    //cout<<object.calculateTheShortestPath(1,5);
+
+    object.graphColoring();
 
     return 0;
 }
