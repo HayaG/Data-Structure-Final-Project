@@ -1,6 +1,8 @@
 # Analysis of Connections and Gender in Social Media
 
-Our project creates a graph from a dataset of an anonymized friend circle on Facbook. Each node on our graph corresponds to a user, and an edge between users indicates that those users are friends.
+Our project creates a graph from a dataset of an anonymized friend circle on Facbook. Each node on our graph corresponds to a user, and an edge between users indicates that those users are friends. In our analysis, we looked at the gender of each user as an attribute.
+
+The data is stored using an edge list .csv file (EdgeList.csv) and an attributes list .csv file (Gender.csv), which are parsed in the construction of the graph.
 
 ## Algorithms
 
@@ -17,6 +19,8 @@ Graph Coloring: This algorithm assigns a color to each node such that two nodes 
 To compile and run main.cpp, open Makefile in terminal and run the following commands
 ```
 make
+```
+```
 ./graph
 ```
 
@@ -29,6 +33,8 @@ The following functions may be used t
 To compile and run the test case suite, open Makefile in terminal and run the following commands:
 ```
 make test
+```
+```
 ./test
 ```
 And upon a successful run you will see the following:
@@ -37,7 +43,10 @@ And upon a successful run you will see the following:
 All tests passed (133 assertions in 14 test cases)
 ```
 
-The test cases utilizes the two graphs below, which we constructed specifically for usage in test cases. Each node is either gender A or gender B, labeled on the node, with edge weights labeled on the edges. 
+The test cases utilizes the two graphs below, which we constructed specifically for usage in test cases. Each node is either gender A or gender B, labeled on the node, with edge weights labeled on the edges. The graph is stored as a .csv file, which can be found along with the images in the tests folder.
+
+![Ten Node Graph Image](https://github-dev.cs.illinois.edu/cs225-fa21/murugan4-aryanm6-hpg2-ankitv2/blob/859236a1d3066d6e22888e9da2090c0ab4372976/tests/10%20Node%20Test%20Graph.png)
+![Seven Node Graph Image](https://github-dev.cs.illinois.edu/cs225-fa21/murugan4-aryanm6-hpg2-ankitv2/blob/859236a1d3066d6e22888e9da2090c0ab4372976/tests/7%20Node%20Test%20Graph.png)
 
 Our test cases utilize catch. Within the test.cpp file, you will see comments describing how each test case functions. Below are the 7 primary test cases, each is run on both test graph.
 
