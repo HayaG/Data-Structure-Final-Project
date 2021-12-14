@@ -8,11 +8,12 @@ int main(){
     int genderAcount, genderBcount = 0;
     vector<int> visited_path;
     object.bfs(genderAcount, genderBcount, visited_path, 1);
-    sort(visited_path.begin(), visited_path.end());
+
     std::cout<<"Size of Data from BFS traversal: "<<visited_path.size()<<std::endl;
     std::cout<<std::endl;
 
     object.calculateGenderRatio();
+    
     std::cout<<"Gender Ratio: "<<object.ratio_AtoB<<std::endl;
     std::cout<<"Gender A: "<<genderAcount<<". Gender B: "<<genderBcount<<"."<<std::endl;
     std::cout<<std::endl;
