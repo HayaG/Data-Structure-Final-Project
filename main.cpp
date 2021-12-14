@@ -15,7 +15,7 @@ int main(){
     object.calculateGenderRatio();
 
     std::cout<<"Gender Ratio: "<<object.ratio_AtoB<<std::endl;
-    std::cout<<"Gender A: "<<genderAcount<<". Gender B: "<<genderBcount<<"."<<std::endl;
+    std::cout<<"Gender A: "<<visited_path.size() -  genderBcount <<". Gender B: "<<genderBcount<<"."<<std::endl;
     std::cout<<std::endl;
 
     std::cout<<"Number of distinct Colors needed: "<<object.graphColoring().size()<<std::endl;

@@ -136,8 +136,7 @@ void facebook_graph::calculateGenderRatio(){
     int aCount, bCount = 0;
     vector<int> visitedOrder;
     bfs(aCount, bCount, visitedOrder, 1);
-    cout << aCount << endl;
-    cout<< bCount<<endl;
+    
     ratio_AtoB = (double)aCount / bCount;
 }
 
