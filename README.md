@@ -74,9 +74,17 @@ This function can be modified to utilize other functions of the `facebook_graph`
 Below are the functions that may be used in `main.cpp`. Within `facebook_graph.h`, there are comments describing the parameters and usage of each function.
 ```c++
 facebook_graph(string Gender_File, string EdgeList_File);
+```
+```c++
 void calculateGenderRatio();
+```
+```c++
 void bfs(int &male_count, int &female_count, vector<int> &visited_order, int startingNode);
+```
+```c++
 int calculateTheShortestPath(int Node1, int Node2);
+```
+```c++
 unordered_map<int, vector<int>> graphColoring();
 ```
 
