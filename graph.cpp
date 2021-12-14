@@ -180,7 +180,7 @@ int facebook_graph::calculateTheShortestPath(int Node1, int Node2){
     // Maps Node to Their Current Cost
     // Array is 0 index, so Node1 is in index 0
     vector<int> node_cost(graph.size(),INT_MAX);
-    node_cost[Node1]=0;
+    node_cost[Node1-1]=0;
 
     // SP set, this keeps track of the verticies included in the shortest Path
     vector<bool> sp_set(graph.size(),false);
@@ -193,11 +193,11 @@ int facebook_graph::calculateTheShortestPath(int Node1, int Node2){
 
     int sp_set_size = 0;
     while(sp_set_size != graph.size()){
-
-        int node_id = minDistance(node_cost, sp_set);
+        int index_of_next_element = minDistance(node_cost,sp_set);
+        int node_id = index_of_next_element + 1;
         
         //Include next_element in sp_set
-        sp_set[node_id] = true;
+        sp_set[index_of_next_element] = true;
         sp_set_size++;
 
         vector<pair<int,int> > adjacent_vertex_list = graph[node_id];
@@ -206,16 +206,16 @@ int facebook_graph::calculateTheShortestPath(int Node1, int Node2){
             
             // Node node_id connects to i.first
             int neighbor_node = i.first;
-            int neightbor_node_cost = node_cost[neighbor_node];
+            int neightbor_node_cost = node_cost[neighbor_node-1];
             int weight_of_connection  = i.second;
 
-            if (node_cost[node_id] + weight_of_connection < neightbor_node_cost){
-                node_cost[neighbor_node] = node_cost[node_id] + weight_of_connection;
+            if (node_cost[node_id-1] + weight_of_connection < neightbor_node_cost){
+                node_cost[neighbor_node-1] = node_cost[node_id-1] + weight_of_connection;
             }
         }
     }
 
-    return node_cost[Node2];
+    return node_cost[Node2-1];
 }
 
 //This function Returns the Index of the next minimum element to be visited in shortest Path Alg that ins't in SP set
