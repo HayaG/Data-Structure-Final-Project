@@ -16,6 +16,7 @@ Graph Coloring: This algorithm assigns a color to each node such that two nodes 
 
 ## Usage
 
+### main.cpp
 To compile and run main.cpp, open Makefile in terminal and run the following commands
 ```
 make
@@ -24,10 +25,53 @@ make
 ./graph
 ```
 
-The following functions may be used t
+By default, the main function will look like this:
 ```c++
+int main() {
+  facebook_graph object("Gender.csv", "EdgeList.csv");
 
+  int genderAcount, genderBcount = 0;
+  vector<int> visited_path;
+  object.bfs(genderAcount, genderBcount, visited_path, 1);
+
+  std::cout<<"Size of Data from BFS traversal: "<<visited_path.size()<<std::endl;
+  std::cout<<std::endl;
+
+  object.calculateGenderRatio();
+    
+  std::cout<<"Gender Ratio: "<<object.ratio_AtoB<<std::endl;
+  std::cout<<"Gender A: "<<genderAcount<<". Gender B: "<<genderBcount<<"."<<std::endl;
+  std::cout<<std::endl;
+
+  std::cout<<"Number of distinct Colors needed: "<<object.graphColoring().size()<<std::endl;
+  std::cout<<std::endl;
+  return 0;
+}
 ```
+The output looks like this:
+
+```![10 Node Test Graph](https://media.github-dev.cs.illinois.edu/user/12454/files/c3c1fc89-5bbb-4f57-a12f-704acae2f489)
+
+Size of Data from BFS traversal: 348
+
+Gender Ratio: 0.59633
+Gender A: 1818321905. Gender B: 218.
+
+Number of distinct Colors needed: 21
+```
+
+Step by step, this function:
+- Parses data from the given csv files and creates a graph object, named `object`
+- Creates integers to store the gender count from BFS, and a vector to store the path
+- Runs BFS starting at node 1 and outputs the number of nodes visited
+- Calculates and outputs the gender ratio of A to B using the values determined through the BFS traversal
+- Outputs the number of distinct colors needed to color the graph
+    - `object.graphColoring()` returns an `unordered_map` as described in the algorithm description, and `.size()` returns the number of keys of this map
+
+This function can be modified to utilize other functions of the `facebook_graph` class and output the results.
+
+### Functions
+
 
 ## Test Case Suite
 To compile and run the test case suite, open Makefile in terminal and run the following commands:
@@ -58,8 +102,8 @@ Our test cases utilize catch. Within the test.cpp file, you will see comments de
 6) Verifying that nodes of the same color do not share an edge
 7) Testing the shortest path algorithm using 5 combinations of nodes
 
-## Authors
-
+## Contributors
+ankitv2 murugan4 aryanm6 hpg2
 
 ## Resources Used
 We utilized this [Stanford SNAP](http://snap.stanford.edu/data/ego-Facebook.html) dataset of anonymized circles from Facebook.
