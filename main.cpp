@@ -13,7 +13,7 @@ int main(){
     std::cout<<std::endl;
 
     object.calculateGenderRatio();
-    
+
     std::cout<<"Gender Ratio: "<<object.ratio_AtoB<<std::endl;
     std::cout<<"Gender A: "<<genderAcount<<". Gender B: "<<genderBcount<<"."<<std::endl;
     std::cout<<std::endl;
@@ -32,13 +32,15 @@ int main(){
     // cout<<object.graph.size()<<endl;
 
     //cout<<object.calculateTheShortestPath(1,5);
-    // unordered_map<int, vector<int>> output = object.graphColoring();
-    // for(auto i:output){
-    //   std::cout<<"Color "<<i.first<<" -->";
-    //   for(auto j: i.second){
-    //     std::cout<<j<<" ";
-    //   }
-    //   std::cout<<std::endl;
-    // }
+
+    //Uncomment this to display the nodes assigned to each color
+    /* unordered_map<int, vector<int>> output = object.graphColoring();
+    for(auto i:output){
+       std::cout<<"Color "<<i.first<<" -->";
+       for(auto j: i.second){
+         std::cout<<j<<" ";
+       }
+       std::cout<<std::endl;
+    } */
     return 0;
 }
