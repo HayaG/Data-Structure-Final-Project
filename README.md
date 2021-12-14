@@ -2,7 +2,7 @@
 
 Our project creates a graph from a dataset of an anonymized friend circle on Facbook. Each node on our graph corresponds to a user, and an edge between users indicates that those users are friends. In our analysis, we looked at the gender of each user as an attribute.
 
-The data is stored using an edge list .csv file (EdgeList.csv) and an attributes list .csv file (Gender.csv), which are parsed in the construction of the graph.
+The data is stored using an edge list .csv file (EdgeList.csv) and an attributes list .csv file (Gender.csv), which are parsed in the construction of the graph. The data is 1-indexed.
 
 ## Algorithms
 
@@ -71,7 +71,14 @@ Step by step, this function:
 This function can be modified to utilize other functions of the `facebook_graph` class and output the results.
 
 ### Functions
-
+Below are the functions that may be used in `main.cpp`. Within `facebook_graph.h`, there are comments describing the parameters and usage of each function.
+```c++
+facebook_graph(string Gender_File, string EdgeList_File);
+void calculateGenderRatio();
+void bfs(int &male_count, int &female_count, vector<int> &visited_order, int startingNode);
+int calculateTheShortestPath(int Node1, int Node2);
+unordered_map<int, vector<int>> graphColoring();
+```
 
 ## Test Case Suite
 To compile and run the test case suite, open Makefile in terminal and run the following commands:
@@ -87,7 +94,7 @@ And upon a successful run you will see the following:
 All tests passed (133 assertions in 14 test cases)
 ```
 
-The test cases utilizes the two graphs below, which we constructed specifically for usage in test cases. Each node is either gender A or gender B, labeled on the node, with edge weights labeled on the edges. The graph is stored as a .csv file, which can be found along with the images in the tests folder.
+The test cases utilizes the two graphs below, which we constructed specifically for usage in test cases. Each node is either gender A or gender B, labeled on the node, with edge weights labeled on the edges. The graphs are stored as multiple .csv files, which can be found along with the images in the tests folder.
 
 ![Ten Node Graph Image](https://github-dev.cs.illinois.edu/cs225-fa21/murugan4-aryanm6-hpg2-ankitv2/blob/859236a1d3066d6e22888e9da2090c0ab4372976/tests/10%20Node%20Test%20Graph.png)
 ![Seven Node Graph Image](https://github-dev.cs.illinois.edu/cs225-fa21/murugan4-aryanm6-hpg2-ankitv2/blob/859236a1d3066d6e22888e9da2090c0ab4372976/tests/7%20Node%20Test%20Graph.png)
